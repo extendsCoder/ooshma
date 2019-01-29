@@ -2,18 +2,30 @@ package com.ooshma.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+@Entity
+@Table(name="Customer")
 public class Customer implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Column(name="login")
 	private String login;
+	@Column(name="name")
 	private String name;
+	@Column(name="address")
 	private String address;
+	@Column(name="location")
 	private String location;
+	@Column(name="email")
 	private String emailAddress;
+	@Column(name="contact")
 	private String contactNumber;
+	@Column(name="password")
 	private String password;
 	
 	public String getLogin() {
