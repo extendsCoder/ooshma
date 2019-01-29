@@ -2,20 +2,37 @@ package com.ooshma.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Dealer")
 public class Dealer implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Id
+	@Column(name="login")
 	private String login;
+	@Column(name="name")
 	private String name;
+	@Column(name="address")
 	private String address;
+	@Column(name="location")
 	private String location;
+	@Column(name="email")
 	private String emailAddress;
+	@Column(name="contact")
 	private String contactNumber;
+	@Column(name="password")
 	private String password;
-	private double cost;
+	@Column(name="price")
+	private double price;
+	@Column(name="active")
 	private int active;
 	
 	public String getLogin() {
@@ -60,11 +77,11 @@ public class Dealer implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public double getCost() {
-		return cost;
+	public double getPrice() {
+		return price;
 	}
-	public void setCost(double cost) {
-		this.cost = cost;
+	public void setPrice(double cost) {
+		this.price = price;
 	}
 	public int getActive() {
 		return active;
@@ -80,7 +97,7 @@ public class Dealer implements Serializable {
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((contactNumber == null) ? 0 : contactNumber.hashCode());
 		long temp;
-		temp = Double.doubleToLongBits(cost);
+		temp = Double.doubleToLongBits(price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((emailAddress == null) ? 0 : emailAddress.hashCode());
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
@@ -110,7 +127,7 @@ public class Dealer implements Serializable {
 				return false;
 		} else if (!contactNumber.equals(other.contactNumber))
 			return false;
-		if (Double.doubleToLongBits(cost) != Double.doubleToLongBits(other.cost))
+		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
 			return false;
 		if (emailAddress == null) {
 			if (other.emailAddress != null)
