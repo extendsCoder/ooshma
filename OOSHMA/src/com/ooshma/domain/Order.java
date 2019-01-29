@@ -2,17 +2,33 @@ package com.ooshma.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Order")
 public class Order implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String orderId;
+	@Column(name = "clogin")
 	private String customerLogin;
+	@Column(name = "dlogin")
 	private String dealerLogin;
+	@Column(name = "length")
 	private double length;
+	@Column(name = "breadth")
 	private double breadth;
+	@Column(name = "cost")
 	private double cost;
 	
 	public String getOrderId() {
