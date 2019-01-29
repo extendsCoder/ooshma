@@ -46,7 +46,6 @@ public class DealerDao {
 			query.setParameter("password", dealer.getPassword());
 			query.setParameter("price", dealer.getPrice());
 			query.setParameter("active", dealer.getActive());
-			query.addEntity(Dealer.class);
 			query.executeUpdate();
 		}catch(Exception ex){
 			isSuccessful = false;
@@ -59,38 +58,72 @@ public class DealerDao {
 	
 	public Dealer retrieveDealerInformationByLogin(String login){
 		Session session = this.getSessionFactory().openSession();
-		String sql = "SELECT * FROM Dealer where login = :login";
-		NativeQuery sqlQuery = session.createSQLQuery(sql);
-		sqlQuery.addEntity(Dealer.class);
-		sqlQuery.setParameter("login", login);
-		Dealer dealer = null;
-		dealer = (Dealer) sqlQuery.list();
-		return dealer;
+		try{
+			String sql = "SELECT * FROM Dealer where login = :login";
+			NativeQuery sqlQuery = session.createSQLQuery(sql);
+			sqlQuery.addEntity(Dealer.class);
+			sqlQuery.setParameter("login", login);
+			Dealer dealer = null;
+			dealer = (Dealer) sqlQuery.list();
+			return dealer;
+		}finally{
+			session.close();
+		}
 	}
 	
 	public Dealer retrieveDealerInformationByEmailAddress(String emailAddress){
 		Session session = this.getSessionFactory().openSession();
-		String sql = "SELECT * FROM Dealer where email = :email";
-		NativeQuery sqlQuery = session.createSQLQuery(sql);
-		sqlQuery.addEntity(Dealer.class);
-		sqlQuery.setParameter("email", emailAddress);
-		Dealer dealer = null;
-		dealer = (Dealer) sqlQuery.list();
-		return dealer;
+		try{
+			String sql = "SELECT * FROM Dealer where email = :email";
+			NativeQuery sqlQuery = session.createSQLQuery(sql);
+			sqlQuery.addEntity(Dealer.class);
+			sqlQuery.setParameter("email", emailAddress);
+			Dealer dealer = null;
+			dealer = (Dealer) sqlQuery.list();
+			return dealer;
+		}finally{
+			session.close();
+		}
 	}
 	
 	public List<Dealer> retrieveAllDealers(){
 		List<Dealer> dealers = new ArrayList<Dealer>();
 		Session session = this.getSessionFactory().openSession();
-		String sql = "SELECT * FROM Dealer";
-		NativeQuery sqlQuery = session.createSQLQuery(sql);
-		sqlQuery.addEntity(Dealer.class);
-		dealers = (List<Dealer>) sqlQuery.list();
-		return dealers;
+		try{
+			String sql = "SELECT * FROM Dealer";
+			NativeQuery sqlQuery = session.createSQLQuery(sql);
+			sqlQuery.addEntity(Dealer.class);
+			dealers = (List<Dealer>) sqlQuery.list();
+			return dealers;
+		}finally{
+			session.close();
+		}
 	}
 	
 	public boolean updateDealerInformation(Dealer dealer, String login){
 		boolean isSuccessful = true;
+		Session session = null;
+		try{
+			session = this.getSessionFactory().openSession();
+			String sql = "update Dealer set name = :name, address = :address, location = :location"
+					+ ", contact = :contact, password = :password, price = :price, active = :price"
+					+ " where login = :login";
+			NativeQuery query = session.createSQLQuery(sql);
+			query.setParameter("login", login);
+			query.setParameter("name", dealer.getName());
+			query.setParameter("address", dealer.getAddress());
+			query.setParameter("location", dealer.getLocation());
+			query.setParameter("contact", dealer.getContactNumber());
+			query.setParameter("password", dealer.getPassword());
+			query.setParameter("price", dealer.getPrice());
+			query.setParameter("active", dealer.getActive());
+			query.executeUpdate();
+		}catch(Exception ex){
+			isSuccessful = false;
+			ex.printStackTrace();
+		}finally{
+			session.close();
+		}
 		
 		return isSuccessful;
 	}
